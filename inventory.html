@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stokify - Inventory Management Dashboard</title>
+    <link rel="stylesheet" href="mainstyle.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+                <div class="sidebar-sticky">
+                    <h4 class="sidebar-heading">Inventory Management</h4>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">
+                                <i class="fas fa-tachometer-alt"></i>
+                                Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">
+                                <i class="fas fa-box"></i>
+                                Inventory Requests
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="">
+                                <i class="fas fa-shopping-cart"></i>
+                                Orders
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="place_orders.html">
+                                <i class="fas fa-plus-circle"></i>
+                                Place Orders
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="invoices.html">
+                                <i class="fas fa-file-invoice"></i>
+                                Invoices
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="shipping.html">
+                                <i class="fas fa-shipping-fast"></i>
+                                Shipping
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="present.html">
+                                <i class="fas fa-chart-line"></i>
+                                Present
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Dashboard</h1>
+                </div>
+                <p>Welcome to your inventory management dashboard. Here you can track inventory levels, manage orders, and more.</p>
+                
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="card text-center shadow-sm border-0 rounded">
+                            <div class="card-body">
+                                <h5 class="card-title">Total Inventory</h5>
+                                <p class="card-text">1500 items</p>
+                                <a href="inventory_requests.html" class="btn btn-primary">Manage Inventory</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center shadow-sm border-0 rounded">
+                            <div class="card-body">
+                                <h5 class="card-title">Pending Orders</h5>
+                                <p class="card-text">25 orders</p>
+                                <a href="orders.html" class="btn btn-primary">View Orders</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center shadow-sm border-0 rounded">
+                            <div class="card-body">
+                                <h5 class="card-title">Total Sales</h5>
+                                <p class="card-text">$12,500</p>
+                                <a href="invoices.html" class="btn btn-primary">View Invoices</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="mt-4">Quick Actions</h2>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="card text-center shadow-sm border-0 rounded">
+                            <div class="card-body">
+                                <h5 class="card-title">Place New Order</h5>
+                                <a href="place_orders.html" class="btn btn-success">Place Order</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center shadow-sm border-0 rounded">
+                            <div class="card-body">
+                                <h5 class="card-title">Shipping Management</h5>
+                                <a href="shipping.html" class="btn btn-warning">Manage Shipping</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center shadow-sm border-0 rounded">
+                            <div class="card-body">
+                                <h5 class="card-title">Present Data</h5>
+                                <a href="present.html" class="btn btn-info">View Presentations</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-4 text-center">
+                    <a href="dashboard.html" class="btn btn-secondary">Back to Main Dashboard</a>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

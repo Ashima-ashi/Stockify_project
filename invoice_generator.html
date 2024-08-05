@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Invoice Generator</title>
+    <link rel="stylesheet" href="mainstyle.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            background: #f4f7f6;
+            font-family: 'Poppins', sans-serif;
+        }
+        .container {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .form-label {
+            font-weight: 500;
+        }
+        .table th, .table td {
+            text-align: center;
+        }
+        .btn-success, .btn-primary, .btn-warning, .btn-info {
+            border-radius: 20px;
+        }
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+        .btn-success:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004a99;
+        }
+        .btn-warning {
+            background-color: #ffc107;
+            border-color: #ffc107;
+        }
+        .btn-warning:hover {
+            background-color: #e0a800;
+            border-color: #d39e00;
+        }
+        .btn-info {
+            background-color: #17a2b8;
+            border-color: #17a2b8;
+        }
+        .btn-info:hover {
+            background-color: #117a8b;
+            border-color: #0f6c75;
+        }
+        .table-light {
+            background-color: #f8f9fa;
+        }
+        .card-header {
+            background-color: #007bff;
+            color: white;
+            font-weight: 600;
+        }
+        .card-body {
+            background-color: #f4f7f6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="text-center mb-4">Dynamic Invoice Generator</h1>
+        
+        <form id="invoiceForm">
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="clientName" class="form-label">Client Name</label>
+                    <input type="text" class="form-control" id="clientName" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="clientEmail" class="form-label">Client Email</label>
+                    <input type="email" class="form-control" id="clientEmail" required>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="invoiceDate" class="form-label">Invoice Date</label>
+                    <input type="date" class="form-control" id="invoiceDate" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="dueDate" class="form-label">Due Date</label>
+                    <input type="date" class="form-control" id="dueDate" required>
+                </div>
+            </div>
+
+            <h3 class="mt-4 mb-3">Items</h3>
+            <table class="table table-bordered" id="itemsTable">
+                <thead class="table-light">
+                    <tr>
+                        <th>Item Description</th>
+                        <th>Quantity</th>
+                        <th>Unit Price</th>
+                        <th>Total</th>
+                        <th><button type="button" class="btn btn-success btn-sm" onclick="addRow()">Add Row</button></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" class="form-control" placeholder="Item Description"></td>
+                        <td><input type="number" class="form-control" placeholder="Quantity" onchange="updateTotal(this)"></td>
+                        <td><input type="number" class="form-control" placeholder="Unit Price" onchange="updateTotal(this)"></td>
+                        <td><input type="text" class="form-control" readonly></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="row mb-3">
+                <div class="col-md-12 text-end">
+                    <h4>Total Amount: <span id="totalAmount">Rs.0.00</span></h4>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-12 text-center">
+                    <button type="button" class="btn btn-primary" onclick="generatePDF()">Generate PDF</button>
+                    <button type="button" class="btn btn-success" onclick="sendEmail()">Send Email</button>
+                </div>
+            </div>
+
+            <div class="mt-4 text-center">
+                <a href="dashboard.html" class="btn btn-secondary">Back to Main Dashboard</a>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function addRow() {
+            const table = document.getElementById('itemsTable').getElementsByTagName('tbody')[0];
+            const newRow = table.insertRow();
+            newRow.innerHTML = `
+                <td><input type="text" class="form-control" placeholder="Item Description"></td>
+                <td><input type="number" class="form-control" placeholder="Quantity" onchange="updateTotal(this)"></td>
+                <td><input type="number" class="form-control" placeholder="Unit Price" onchange="updateTotal(this)"></td>
+                <td><input type="text" class="form-control" readonly></td>
+                <td><button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">Remove</button></td>
+            `;
+        }
+
+        function removeRow(button) {
+            const row = button.closest('tr');
+            row.remove();
+            calculateTotal();
+        }
+
+        function updateTotal(input) {
+            const row = input.closest('tr');
+            const quantity = row.querySelector('input[placeholder="Quantity"]').value;
+            const unitPrice = row.querySelector('input[placeholder="Unit Price"]').value;
+            const totalCell = row.querySelector('input[readonly]');
+            totalCell.value = (quantity * unitPrice).toFixed(2);
+            calculateTotal();
+        }
+
+        function calculateTotal() {
+            let total = 0;
+            const rows = document.querySelectorAll('#itemsTable tbody tr');
+            rows.forEach(row => {
+                const totalCell = row.querySelector('input[readonly]');
+                total += parseFloat(totalCell.value) || 0;
+            });
+            document.getElementById('totalAmount').textContent = `Rs.${total.toFixed(2)}`;
+        }
+
+        function sendEmail() {
+            // Implement email sending functionality
+            alert('Email sent successfully!');
+        }
+
+        function generatePDF() {
+            // Implement PDF generation functionality
+            alert('PDF downloaded!');
+        }
+    </script>
+</body>
+</html>
